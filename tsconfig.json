@@ -1,8 +1,17 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
-/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@dashboard/*": ["src/app/modules/dashboard/*"],
+      "@auth/*": ["src/app/modules/auth/*"],
+      "@manager/*": ["src/app/modules/manager/*"],
+      "@movie/*": ["src/app/modules/movies/*"],
+      "@movie-theaters/*": ["src/app/modules/movie-theaters/*"],
+      "@store-front/*": ["src/app/modules/store-front/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@envs/*": ["src/environments/*"]
+    },
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,

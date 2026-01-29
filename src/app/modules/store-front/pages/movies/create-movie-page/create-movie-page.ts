@@ -1,0 +1,29 @@
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { toastSuccess } from '@auth/alerts/login-success'
+import { FormMovie } from "@manager/components/form-movie/form-movie";
+import { CreateMovie } from '@manager/interfaces/create-movie.interface';
+import { MoviesManagerService } from '@manager/services/movies-manager.service';
+
+@Component({
+  selector: 'create-movie-page',
+  imports: [FormMovie],
+  template: `
+  <form-movie (postForm)="onSubmit($event)"/>
+  `,
+})
+export default class CreateMoviePage {
+  private movieManagerService = inject(MoviesManagerService);
+  private router = inject(Router);
+
+  onSubmit = (model: CreateMovie) =>
+    this.movieManagerService.createMovie(model).subscribe({
+      next: () => {
+        console.log(`Película ${model.name} creada`);
+        toastSuccess("Película creada correctamente").then(() => this.router.navigateByUrl('/home/dashboard'));
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+}
