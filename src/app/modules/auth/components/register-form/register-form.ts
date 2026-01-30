@@ -132,7 +132,7 @@ import { Register } from '@auth/interfaces/register.interface';
         <input type="password" class="grow" placeholder="Contraseña" formControlName="password" />
       </label>
 
-      <button type="submit" class="btn btn-secondary">Ingresar</button>
+      <button type="submit" class="btn btn-secondary">Registrarse</button>
 
       @if (hasError()) {
         <form-error
@@ -142,9 +142,9 @@ import { Register } from '@auth/interfaces/register.interface';
       }
 
       <p class="text-slate-700">
-        ¿No tienes cuenta?
+        ¿Ya tienes una cuenta?
 
-        <a routerLink="/auth/register" class="text-secondary">Crea una aquí</a>
+        <a routerLink="/auth/register" class="text-secondary">Inicia sesión</a>
       </p>
     </form>
   `,
