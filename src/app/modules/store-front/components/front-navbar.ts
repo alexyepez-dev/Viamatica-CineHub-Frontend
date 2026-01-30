@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { TokenService } from '@auth/services/token.service';
 
 @Component({
   selector: 'front-navbar',
@@ -121,9 +122,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
         </ul>
       </div>
       <div class="navbar-end">
-        <a class="btn">Cerrar sesión</a>
+        <a (click)="tokenService.logout()" [routerLink]="['/auth/login']" class="btn">Cerrar sesión</a>
       </div>
     </div>
   `,
 })
-export class FrontNavbar {}
+export class FrontNavbar {
+  tokenService = inject(TokenService)
+}
