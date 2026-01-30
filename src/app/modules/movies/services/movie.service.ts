@@ -39,4 +39,10 @@ export class MovieService {
     );
 
   getMovie = (idSlug: string) => this.http.get<Movie>(`${this.baseUrl}/movies/${idSlug}`);
+
+  deleteMovie = (movieId: string) => this.http.delete(`${this.baseUrl}/movies`, {
+        params: {
+          movieId: movieId,
+        },
+      })
 }

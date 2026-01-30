@@ -23,6 +23,10 @@ const storeFrontRoutes: Routes = [
         loadComponent: () => import('./pages/movies/search-publication-date-page/search-publication-date-page'),
       },
       {
+        path: 'movies/update',
+        loadComponent: () => import('./pages/movies/update-movie-page/update-movie-page'),
+      },
+      {
         path: 'movies/search/:name',
         loadComponent: () => import('./pages/movies/search-movie-page/search-movie-page'),
       },

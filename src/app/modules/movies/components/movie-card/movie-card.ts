@@ -1,8 +1,10 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import { Movie } from '@movie/interfaces/movie.interface';
 import { MovieStatusPipe } from '@movie/pipes/movie-status.pipe';
 import { RouterLink } from '@angular/router';
 import { MovieImagePipe } from '@movie/pipes/movie-image.pipe';
+import { MovieService } from '@movie/services/movie.service';
+import { toastSuccess } from '@auth/alerts/login-success';
 
 @Component({
   selector: 'movie-card',
@@ -57,14 +59,19 @@ import { MovieImagePipe } from '@movie/pipes/movie-image.pipe';
           </a>
           <a
             class="btn btn-square btn-sm btn-outline btn-success"
-            [routerLink]="['/home/manager/create-movie']"
+            [routerLink]="['/home/movies/update']"
           >
             <span class="material-symbols-outlined ">edit</span>
           </a>
-          <button class="btn btn-square btn-sm btn-outline btn-error">
+          <button
+            class="btn btn-square btn-sm btn-outline btn-error"
+            (click)="deleteMovie(movie().movieId)"
+          >
             <span class="material-symbols-outlined">delete</span>
           </button>
-          <a class="btn btn-secondary btn-sm" [routerLink]="['/home/movies', movie().slug]"> Ver </a>
+          <a class="btn btn-secondary btn-sm" [routerLink]="['/home/movies', movie().slug]">
+            Ver
+          </a>
         </div>
       </div>
     </div>
@@ -72,4 +79,15 @@ import { MovieImagePipe } from '@movie/pipes/movie-image.pipe';
 })
 export class MovieCard {
   movie = input.required<Movie>();
+  movieService = inject(MovieService);
+  onMovieDeleted = output<void>();
+
+  deleteMovie = (movieId: string) =>
+    this.movieService.deleteMovie(movieId).subscribe({
+      next: () => {
+        toastSuccess('Sala eliminada exitosamente.');
+        this.onMovieDeleted.emit();
+      },
+      error: (err) => console.error(`Error: ${err}`),
+    });
 }

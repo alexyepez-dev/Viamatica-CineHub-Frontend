@@ -4,7 +4,6 @@ import { MovieCard } from '@movie/components/movie-card/movie-card';
 import { MovieService } from '@movie/services/movie.service';
 import { Router } from '@angular/router';
 import { MovieSearchInput } from '@movie/components/search-input/search-input';
-import { MovieSearchDate } from "@movie/components/movie-search-date/movie-search-date";
 
 @Component({
   selector: 'movies-page',
@@ -23,7 +22,7 @@ import { MovieSearchDate } from "@movie/components/movie-search-date/movie-searc
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 mt-2 gap-3">
         @for (movie of movieResource.value().movies; track $index) {
-          <movie-card [movie]="movie" />
+          <movie-card [movie]="movie" (onMovieDeleted)="movieResource.reload()" />
         }
       </div>
     }

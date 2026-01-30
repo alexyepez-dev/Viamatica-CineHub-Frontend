@@ -1,12 +1,14 @@
 import { Component, inject, output, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CreateMovie } from '@manager/interfaces/create-movie.interface';
+import { MovieFormButtonPipe } from '@manager/pipes/movie-form-button.pipe';
 import { FormError } from '@shared/components/form-error';
 import { pushError } from '@shared/utils/pushError.util';
 
 @Component({
   selector: 'form-movie',
-  imports: [ReactiveFormsModule, FormError],
+  imports: [ReactiveFormsModule, FormError, MovieFormButtonPipe],
   template: `
     <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 animate-fadeIn">
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -54,7 +56,7 @@ import { pushError } from '@shared/utils/pushError.util';
               type="submit"
               class="flex w-full justify-center rounded-md px-3 btn btn-secondary py-1.5 text-sm/6 font-semiboldfocus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
             >
-              Crear película
+              {{ router.url | movieFormButton }}
             </button>
           </div>
         </form>
@@ -64,6 +66,7 @@ import { pushError } from '@shared/utils/pushError.util';
 })
 export class FormMovie {
   private fb = inject(FormBuilder);
+  router = inject(Router);
 
   hasError = signal(false);
   postForm = output<CreateMovie>();

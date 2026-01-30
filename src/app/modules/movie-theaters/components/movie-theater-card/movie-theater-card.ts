@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { toastSuccess } from '@auth/alerts/login-success';
 import { MovieTheaters } from '@movie-theaters/interfaces/movie-theaters.interface';
@@ -36,10 +36,14 @@ import { MovieTheatersService } from '@movie-theaters/services/movie-theaters.se
 export class MovieTheaterCard {
   movieTheater = input.required<MovieTheaters>();
   movieTheaterService = inject(MovieTheatersService);
+  onMovieTheaterDeleted = output<void>();
 
   deleteMovieTheater = (movieTheaterId: string) =>
     this.movieTheaterService.deleteMovieTheaterStatus(movieTheaterId).subscribe({
-      next: () => toastSuccess('Sala eliminada exitosamente.'),
+      next: () => {
+        toastSuccess('Sala eliminada exitosamente.');
+        this.onMovieTheaterDeleted.emit();
+      },
       error: (err) => console.error(`Error: ${err}`),
     });
 }

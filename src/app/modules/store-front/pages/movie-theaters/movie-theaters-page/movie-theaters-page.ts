@@ -19,7 +19,10 @@ import { MovieTheaterCard } from '@movie-theaters/components/movie-theater-card/
       <h2 class="text-xl mb-5 text-secondary animate-fadeIn">Para todos los gustos</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 mt-2 gap-3">
         @for (movie of movieTheaterResource.value(); track $index) {
-          <movie-theater-card [movieTheater]="movie" />
+          <movie-theater-card
+            [movieTheater]="movie"
+            (onMovieTheaterDeleted)="movieTheaterResource.reload()"
+          />
         }
       </div>
     }
