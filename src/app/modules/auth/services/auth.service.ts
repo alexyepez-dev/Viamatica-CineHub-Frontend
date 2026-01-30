@@ -5,6 +5,7 @@ import { environment } from '@envs/environment.development';
 import { tap } from 'rxjs';
 import { TokenService } from '@auth/services/token.service';
 import { AuthResponse } from '@auth/interfaces/auth-response.interface';
+import { Register } from '@auth/interfaces/register.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -18,4 +19,6 @@ export class AuthService {
     this.http
       .post<AuthResponse>(`${this.baseUrl}/auth/login`, credentials)
       .pipe(tap((res) => this.tokenService.setToken(res)));
+
+  register = (credentials: Register) => this.http.post<Register>(`${this.baseUrl}/auth/register/`, credentials)
 }

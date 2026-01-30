@@ -5,6 +5,6 @@ export const toastSuccess = (message: string) => {
     icon: 'success',
     title: message,
     showConfirmButton: false,
-    timer: 1500,
+    timer: 1900,
   });
 };

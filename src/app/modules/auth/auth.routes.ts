@@ -10,6 +10,10 @@ const authRoutes: Routes = [
         loadComponent: () => import('./pages/login-page/login-page'),
       },
       {
+        path: 'register',
+        loadComponent: () => import('./pages/register-page/register-page'),
+      },
+      {
         path: '**',
         redirectTo: 'login',
       },
