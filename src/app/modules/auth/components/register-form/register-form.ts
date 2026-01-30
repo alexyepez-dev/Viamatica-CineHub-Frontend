@@ -28,7 +28,7 @@ import { Register } from '@auth/interfaces/register.interface';
         <input
           type="text"
           class="grow"
-          placeholder="Nombre de usuario"
+          placeholder="Cédula"
           formControlName="dni"
         />
       </label>
@@ -50,7 +50,7 @@ import { Register } from '@auth/interfaces/register.interface';
         <input
           type="text"
           class="grow"
-          placeholder="Nombre de usuario"
+          placeholder="Nombres"
           formControlName="names"
         />
       </label>
@@ -72,7 +72,7 @@ import { Register } from '@auth/interfaces/register.interface';
         <input
           type="text"
           class="grow"
-          placeholder="Nombre de usuario"
+          placeholder="Apellidos"
           formControlName="surnames"
         />
       </label>
