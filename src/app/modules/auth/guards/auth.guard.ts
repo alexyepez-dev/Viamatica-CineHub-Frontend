@@ -7,7 +7,11 @@ export const authGuard: CanActivateFn = () => {
   const tokenService = inject(TokenService);
   const router = inject(Router);
 
-  
+  if(!tokenService.youAreLoggedIn()){
+    router.navigate(["/home/not-found"]);
+
+    return false;
+  }
 
   return true;
 };

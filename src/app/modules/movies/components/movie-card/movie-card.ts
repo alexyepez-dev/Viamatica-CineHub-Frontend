@@ -53,7 +53,7 @@ import { toastSuccess } from '@auth/alerts/login-success';
         <div class="card-actions mt-4 grid grid-cols-4 gap-1">
           <a
             class="btn btn-square btn-sm btn-outline btn-info"
-            [routerLink]="['/home/manager/create-movie']"
+            [routerLink]="['/home/movies/assign-image', movie().movieId]"
           >
             <span class="material-symbols-outlined">add_photo_alternate</span>
           </a>
