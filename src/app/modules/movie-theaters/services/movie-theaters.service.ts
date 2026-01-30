@@ -18,5 +18,10 @@ export class MovieTheatersService {
       .pipe(tap((x) => console.log(x)));
 
   getMovieTheaterStatus = (name: string) =>
-    this.http.get<MovieTheatersStatus>(`${this.baseUrl}/movie-theaters/status/${name}`).pipe(tap((x) => console.log(x)));
+    this.http
+      .get<MovieTheatersStatus>(`${this.baseUrl}/movie-theaters/status/${name}`)
+      .pipe(tap((x) => console.log(x)));
+
+  deleteMovieTheaterStatus = (movieTheaterId: string) =>
+    this.http.delete(`${this.baseUrl}/movie-theaters/${movieTheaterId}`);
 }

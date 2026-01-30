@@ -23,7 +23,7 @@ import { FormError } from "@shared/components/form-error";
         />
     }
 
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between animate-fadeIn">
       <section>
         <h1 class="text-3xl font-bold">Todas las películas.</h1>
         <h2 class="text-xl mb-5 text-secondary">Para todos los gustos</h2>
@@ -36,7 +36,7 @@ import { FormError } from "@shared/components/form-error";
         @for (movie of dateResource.value(); track $index) {
           <movie-card [movie]="movie" />
         } @empty {
-          <p class="text-xl">Aún no se han buscado películas.</p>
+          <p class="text-xl animate-fadeIn">Aún no se han buscado películas.</p>
         }
       </div>
     }

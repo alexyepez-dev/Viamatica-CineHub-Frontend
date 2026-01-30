@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
   selector: 'manager-page',
   imports: [RouterLink],
   template: `
-    <div class="mt-12 flex justify-center items-center">
+    <div class="mt-12 flex justify-center items-center animate-fadeIn">
       <div
         class="mb-12 gap-y-10 gap-x-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2"
       >
