@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Login } from '@auth/interfaces/login.interface';
 import { environment } from '@envs/environment.development';
-import { catchError, map, Observable, of, tap } from 'rxjs';
-import { TokenService } from '@auth/services/token.service';
+import { catchError, map, Observable, of } from 'rxjs';
 import { AuthResponse } from '@auth/interfaces/auth-response.interface';
 import { Register } from '@auth/interfaces/register.interface';
 import { AuthStatus } from '@auth/types/auth-status.type';
@@ -15,10 +14,9 @@ import { rxResource } from '@angular/core/rxjs-interop';
 export class AuthService {
   private http = inject(HttpClient);
   private baseUrl = environment.API_URL;
-  private tokenService = inject(TokenService);
   private _authStatus = signal<AuthStatus>('checking');
   private _username = signal<string | null>(null);
-  private _token = signal<string | null>(this.tokenService.getToken());
+  private _token = signal<string | null>(localStorage.getItem('token'));
 
   checkStatusResource = rxResource({
     stream: () => this.checkStatus(),
@@ -77,4 +75,5 @@ export class AuthService {
     this.logout();
     return of(false);
   };
+
 }
