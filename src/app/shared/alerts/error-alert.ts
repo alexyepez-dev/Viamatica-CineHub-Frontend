@@ -5,6 +5,6 @@ export const errorAlert = (message: string) => {
     icon: 'error',
     title: message,
     showConfirmButton: false,
-    timer: 1900,
+    timer: 2000,
   });
 };

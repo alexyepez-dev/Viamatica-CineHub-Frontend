@@ -11,6 +11,6 @@ bun install
 ```
 
 # Correr proyecto:
-````
-ng server
+```
+ng serve
 ```

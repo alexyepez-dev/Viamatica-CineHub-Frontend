@@ -18,7 +18,7 @@ export default class LoginPage {
   onSubmit = (credentials: Login) =>
     this.authService.login(credentials).subscribe(async (isAuthenticated) => {
       if (isAuthenticated) {
-        await toastSuccess('Bienvenido 🎉');
+        await toastSuccess(`Bienvenido ${credentials.username}`);
         this.router.navigateByUrl('/home/dashboard');
         return;
       }
