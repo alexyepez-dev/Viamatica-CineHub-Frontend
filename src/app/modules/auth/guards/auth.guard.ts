@@ -1,15 +1,16 @@
 import { inject } from '@angular/core';
 import { Router, type CanActivateFn } from '@angular/router';
-import { TokenService } from '@auth/services/token.service';
+import { AuthService } from '@auth/services/auth.service';
+import { firstValueFrom } from 'rxjs';
 
-export const authGuard: CanActivateFn = () => {
-
-  const tokenService = inject(TokenService);
+export const authGuard: CanActivateFn = async () => {
+  const authService = inject(AuthService);
   const router = inject(Router);
 
-  if(!tokenService.youAreLoggedIn()){
-    router.navigate(["/home/not-found"]);
+  const isAuthenticated = await firstValueFrom(authService.checkStatus());
 
+  if (!isAuthenticated) {
+    router.navigateByUrl('/home/not-found');
     return false;
   }
 

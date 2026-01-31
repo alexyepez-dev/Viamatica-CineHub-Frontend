@@ -81,7 +81,6 @@ const storeFrontRoutes: Routes = [
         loadComponent: () => import('./pages/manager-page/manager-page'),
         canActivate: [authGuard],
       },
-
       {
         path: 'not-found',
         loadComponent: () => import('./pages/not-found-page/not-found-page'),
