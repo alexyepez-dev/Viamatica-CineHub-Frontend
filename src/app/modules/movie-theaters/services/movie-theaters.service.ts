@@ -15,6 +15,7 @@ export class MovieTheatersService {
   private http = inject(HttpClient);
   private baseUrl = environment.API_URL;
   private getMovieTheatersCache = inject(CacheService<MovieTheaters[]>);
+  private getMovieTheaterStatusCache = inject(CacheService<MovieTheatersStatus>);
 
   getMovieTheaters = () => {
     const key = moviesTheaterKeysCache.getAll();
@@ -28,10 +29,17 @@ export class MovieTheatersService {
     );
   };
 
-  getMovieTheaterStatus = (name: string) =>
-    this.http
-      .get<MovieTheatersStatus>(`${this.baseUrl}/movie-theaters/status/${name}`)
-      .pipe(tap((x) => console.log(x)));
+  getMovieTheaterStatus = (name: string) => {
+    const key = moviesTheaterKeysCache.byName(name);
+    const cached = this.getMovieTheaterStatusCache.get(key);
+
+    if (cached) return of(cached);
+
+    return this.http.get<MovieTheatersStatus>(`${this.baseUrl}/movie-theaters/status/${name}`).pipe(
+      tap((x) => console.log(x)),
+      tap((resp) => this.getMovieTheaterStatusCache.set(key, resp)),
+    );
+  };
 
   deleteMovieTheaterStatus = (movieTheaterId: string) =>
     this.http.delete(`${this.baseUrl}/movie-theaters/${movieTheaterId}`);
