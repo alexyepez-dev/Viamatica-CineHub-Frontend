@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '@envs/environment.development';
+import { MovieAssign } from '@movie-theaters/interfaces/assign-movie.interface';
 import { MovieTheatersStatus } from '@movie-theaters/interfaces/movie-theaters-status.interface';
 import { MovieTheaters } from '@movie-theaters/interfaces/movie-theaters.interface';
 import { tap } from 'rxjs';
@@ -24,4 +25,7 @@ export class MovieTheatersService {
 
   deleteMovieTheaterStatus = (movieTheaterId: string) =>
     this.http.delete(`${this.baseUrl}/movie-theaters/${movieTheaterId}`);
+
+  assignMovieToMovieTheater = (model: MovieAssign) =>
+    this.http.post(`${this.baseUrl}/movie-movie-theaters/assign`, model);
 }

@@ -1,10 +1,10 @@
 import { Pipe, type PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'statusMovieTheater',
+  name: 'statusMovieTheaterChangeColor',
   standalone: true,
 })
-export class MovieTheaterStatusPipe implements PipeTransform {
+export class MovieTheaterStatusChangeColorPipe implements PipeTransform {
   transform(value: string | undefined): string {
     if (!value) return '';
 

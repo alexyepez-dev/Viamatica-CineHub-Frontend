@@ -2,16 +2,17 @@ import { Component, inject, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { toastSuccess } from '@auth/alerts/login-success';
 import { MovieTheaters } from '@movie-theaters/interfaces/movie-theaters.interface';
+import { MovieTheaterStatusPipe } from '@movie-theaters/pipes/movie-theater-status.pipe';
 import { MovieTheatersService } from '@movie-theaters/services/movie-theaters.service';
 
 @Component({
   selector: 'movie-theater-card',
-  imports: [RouterLink],
+  imports: [RouterLink, MovieTheaterStatusPipe],
   template: `
     <div class="card bg-base-100 w-96 shadow-xl animate-fadeIn">
       <div class="card-body">
         <h2 class="card-title">{{ movieTheater().name }}</h2>
-        <p class="badge badge-primary shadow-md">{{ movieTheater().status }}</p>
+        <p class="badge badge-primary shadow-md">{{ movieTheater().status | statusMovieTheater}}</p>
         <div class="card-actions justify-between items-center">
           <button
             class="btn btn-secondary"
@@ -25,9 +26,12 @@ import { MovieTheatersService } from '@movie-theaters/services/movie-theaters.se
           >
             <span class="material-symbols-outlined">delete</span>
           </button>
-          <button class="btn btn-success" routerLink="/home/manager/create-movie-theater">
+          <a
+            class="btn btn-success"
+            [routerLink]="['/home/movie-theaters/assign-movie', movieTheater().movieTheaterId]"
+          >
             Asignar película
-          </button>
+          </a>
         </div>
       </div>
     </div>

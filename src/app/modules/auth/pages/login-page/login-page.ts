@@ -4,6 +4,7 @@ import { toastSuccess } from '@auth/alerts/login-success';
 import { LoginForm } from '@auth/components/login-form/login-form';
 import { Login } from '@auth/interfaces/login.interface';
 import { AuthService } from '@auth/services/auth.service';
+import { errorAlert } from '@shared/alerts/error-alert';
 
 @Component({
   selector: 'login-page',
@@ -24,6 +25,7 @@ export default class LoginPage {
       },
       error: (err) => {
         console.error(err);
+        errorAlert('Credenciales invalidas o usuario no registrado');
       },
     });
 }
