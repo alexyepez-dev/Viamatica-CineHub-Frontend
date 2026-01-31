@@ -16,16 +16,13 @@ export default class LoginPage {
   private router = inject(Router);
 
   onSubmit = (credentials: Login) =>
-    this.authService.login(credentials).subscribe({
-      next: (res) => {
-        console.log(`Bienvenido ${credentials.username}`);
-        toastSuccess('Has iniciado sesión correctamente').then(() =>
-          this.router.navigateByUrl('/home/dashboard'),
-        );
-      },
-      error: (err) => {
-        console.error(err);
-        errorAlert('Credenciales invalidas o usuario no registrado');
-      },
+    this.authService.login(credentials).subscribe(async (isAuthenticated) => {
+      if (isAuthenticated) {
+        await toastSuccess('Bienvenido 🎉');
+        this.router.navigateByUrl('/home/dashboard');
+        return;
+      }
+
+      errorAlert('Credenciales inválidas o usuario no registrado');
     });
 }

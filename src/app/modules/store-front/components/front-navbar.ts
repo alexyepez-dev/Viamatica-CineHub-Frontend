@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '@auth/services/auth.service';
 import { TokenService } from '@auth/services/token.service';
 
 @Component({
@@ -121,12 +122,17 @@ import { TokenService } from '@auth/services/token.service';
           </li>
         </ul>
       </div>
-      <div class="navbar-end">
-        <a (click)="tokenService.logout()" [routerLink]="['/auth/login']" class="btn">Cerrar sesión</a>
+      <div class="navbar-end gap-4">
+        @if (authService.authStatus() === 'authenticated') {
+          <button class="btn btn-ghost">{{ authService.username() }}</button>
+          <button class="btn btn-error" routerLink="/auth/login" (click)="authService.logout()">
+            Salir
+          </button>
+        }
       </div>
     </div>
   `,
 })
 export class FrontNavbar {
-  tokenService = inject(TokenService)
+  authService = inject(AuthService);
 }
