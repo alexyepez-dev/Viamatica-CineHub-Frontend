@@ -3,7 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { dashboardKeysCache } from '@dashboard/common/dashboardKeysCache.common';
 import { Dashboard } from '@dashboard/interfaces/dashboard.interface';
 import { environment } from '@envs/environment.development';
-import { CacheService } from '@shared/services/cache.service';
+import { CacheService } from '@shared/cache/cache.service';
+import { ResilienceService } from '@shared/resilience/resilience.service';
 import { of, tap } from 'rxjs';
 
 @Injectable({
@@ -13,6 +14,7 @@ export class DashboardService {
   private http = inject(HttpClient);
   private baseUrl = environment.API_URL;
   private getDashboardCache = inject(CacheService<Dashboard>);
+  private resilienceService = inject(ResilienceService);
 
   getDashboard = () => {
     const key = dashboardKeysCache.dashboard();
@@ -23,6 +25,8 @@ export class DashboardService {
     return this.http.get<Dashboard>(`${this.baseUrl}/dashboard`).pipe(
       tap((x) => console.log(x)),
       tap((resp) => this.getDashboardCache.set(key, resp)),
+      this.resilienceService.strategy(),
+      this.resilienceService.catchingError(),
     );
   };
 }

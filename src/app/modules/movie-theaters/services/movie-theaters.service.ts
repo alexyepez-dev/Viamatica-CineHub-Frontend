@@ -5,7 +5,8 @@ import { moviesTheaterKeysCache } from '@movie-theaters/common/movie-theater-key
 import { MovieAssign } from '@movie-theaters/interfaces/assign-movie.interface';
 import { MovieTheatersStatus } from '@movie-theaters/interfaces/movie-theaters-status.interface';
 import { MovieTheaters } from '@movie-theaters/interfaces/movie-theaters.interface';
-import { CacheService } from '@shared/services/cache.service';
+import { CacheService } from '@shared/cache/cache.service';
+import { ResilienceService } from '@shared/resilience/resilience.service';
 import { of, tap } from 'rxjs';
 
 @Injectable({
@@ -16,6 +17,7 @@ export class MovieTheatersService {
   private baseUrl = environment.API_URL;
   private getMovieTheatersCache = inject(CacheService<MovieTheaters[]>);
   private getMovieTheaterStatusCache = inject(CacheService<MovieTheatersStatus>);
+  private resilienceService = inject(ResilienceService);
 
   getMovieTheaters = () => {
     const key = moviesTheaterKeysCache.getAll();
@@ -26,6 +28,8 @@ export class MovieTheatersService {
     return this.http.get<MovieTheaters[]>(`${this.baseUrl}/movie-theaters`).pipe(
       tap((x) => console.log(x)),
       tap((resp) => this.getMovieTheatersCache.set(key, resp)),
+      this.resilienceService.strategy(),
+      this.resilienceService.catchingError(),
     );
   };
 
@@ -38,6 +42,8 @@ export class MovieTheatersService {
     return this.http.get<MovieTheatersStatus>(`${this.baseUrl}/movie-theaters/status/${name}`).pipe(
       tap((x) => console.log(x)),
       tap((resp) => this.getMovieTheaterStatusCache.set(key, resp)),
+      this.resilienceService.strategy(),
+      this.resilienceService.catchingError(),
     );
   };
 

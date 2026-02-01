@@ -144,7 +144,7 @@ import { Register } from '@auth/interfaces/register.interface';
       <p class="text-slate-700">
         ¿Ya tienes una cuenta?
 
-        <a routerLink="/auth/register" class="text-secondary">Inicia sesión</a>
+        <a routerLink="/auth/login" class="text-secondary">Inicia sesión</a>
       </p>
     </form>
   `,

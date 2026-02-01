@@ -5,8 +5,9 @@ import { moviesKeysCache } from '@movie/common/movie-keys.common';
 import { MovieOptions } from '@movie/interfaces/movie-options.interface';
 import { MoviePagination } from '@movie/interfaces/movie-pagination.interface';
 import { Movie } from '@movie/interfaces/movie.interface';
-import { CacheService } from '@shared/services/cache.service';
-import { catchError, of, tap, throwError } from 'rxjs';
+import { CacheService } from '@shared/cache/cache.service';
+import { ResilienceService } from '@shared/resilience/resilience.service';
+import { of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class MovieService {
   private getMovieCache = inject(CacheService<Movie>);
   private searchMoviesByNameCache = inject(CacheService<Movie[]>);
   private searchMoviesByDateCache = inject(CacheService<Movie[]>);
+  private resilienceService = inject(ResilienceService);
 
   getMovies = (option: MovieOptions) => {
     const key = moviesKeysCache.pagination(option);
@@ -35,6 +37,8 @@ export class MovieService {
       .pipe(
         tap((resp) => console.log(resp)),
         tap((resp) => this.getMoviesCache.set(key, resp)),
+        this.resilienceService.strategy(),
+        this.resilienceService.catchingError(),
       );
   };
 
@@ -53,6 +57,8 @@ export class MovieService {
       .pipe(
         tap((resp) => console.log(resp)),
         tap((resp) => this.searchMoviesByNameCache.set(key, resp)),
+        this.resilienceService.strategy(),
+        this.resilienceService.catchingError(),
       );
   };
 
@@ -65,7 +71,8 @@ export class MovieService {
     return this.http.get<Movie[]>(`${this.baseUrl}/movies/by-date/${date}`).pipe(
       tap((resp) => console.log(resp)),
       tap((resp) => this.searchMoviesByDateCache.set(key, resp)),
-      catchError((err) => throwError(() => err)),
+      this.resilienceService.strategy(),
+      this.resilienceService.catchingError(),
     );
   };
 
@@ -78,6 +85,8 @@ export class MovieService {
     return this.http.get<Movie>(`${this.baseUrl}/movies/${idSlug}`).pipe(
       tap((resp) => console.log(resp)),
       tap((resp) => this.getMovieCache.set(key, resp)),
+      this.resilienceService.strategy(),
+      this.resilienceService.catchingError(),
     );
   };
 
