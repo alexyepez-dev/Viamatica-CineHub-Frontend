@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { toastSuccess } from '@auth/alerts/login-success';
+import { toastSuccess } from '@shared/alerts/toast-success';
 import { MovieAssign } from '@movie-theaters/interfaces/assign-movie.interface';
 import { MovieTheatersService } from '@movie-theaters/services/movie-theaters.service';
 import { AssignMovieForm } from '@movie-theaters/components/assign-movie-form/assign-movie-form';

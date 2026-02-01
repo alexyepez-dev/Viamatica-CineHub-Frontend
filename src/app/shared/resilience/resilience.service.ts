@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { retry, throwError, timer, catchError } from 'rxjs';
+import { retry, throwError, timer, catchError, MonoTypeOperatorFunction } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ResilienceService {
-  strategy = () =>
+export class ResilienceService<T> {
+  strategy = (): MonoTypeOperatorFunction<T> =>
     retry({
       count: 30,
       delay: (error, _) => {
@@ -17,5 +17,5 @@ export class ResilienceService {
       },
     });
 
-  catchingError = () => catchError((error) => throwError(() => error));
+  catchingError = (): MonoTypeOperatorFunction<T> => catchError((error) => throwError(() => error));
 }

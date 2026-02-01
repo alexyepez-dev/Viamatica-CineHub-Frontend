@@ -1,6 +1,6 @@
 import { Component, inject, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { toastSuccess } from '@auth/alerts/login-success';
+import { toastSuccess } from '@shared/alerts/toast-success';
 import { MovieTheaters } from '@movie-theaters/interfaces/movie-theaters.interface';
 import { MovieTheaterStatusPipe } from '@movie-theaters/pipes/movie-theater-status.pipe';
 import { MovieTheatersService } from '@movie-theaters/services/movie-theaters.service';

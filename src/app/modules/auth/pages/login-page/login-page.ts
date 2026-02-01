@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { toastSuccess } from '@auth/alerts/login-success';
+import { toastSuccess } from '@shared/alerts/toast-success';
 import { LoginForm } from '@auth/components/login-form/login-form';
 import { Login } from '@auth/interfaces/login.interface';
 import { AuthService } from '@auth/services/auth.service';

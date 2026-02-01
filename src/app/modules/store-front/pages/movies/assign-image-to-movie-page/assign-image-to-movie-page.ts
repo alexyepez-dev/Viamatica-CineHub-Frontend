@@ -1,7 +1,7 @@
 import { Component, inject, input, signal } from '@angular/core';
 import { AssignImageToMovie } from '@movie/interfaces/assign-image-to-movie.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { toastSuccess } from '@auth/alerts/login-success';
+import { toastSuccess } from '@shared/alerts/toast-success';
 import { MovieImageService } from '@movie/services/movie-image.service';
 import { AssignImageToMovieForm } from '@movie/components/assign-image-to-movie-form/assign-image-to-movie-form';
 import { Movie } from '@movie/interfaces/movie.interface';

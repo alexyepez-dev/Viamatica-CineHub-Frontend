@@ -4,7 +4,7 @@ import { MovieStatusPipe } from '@movie/pipes/movie-status.pipe';
 import { RouterLink } from '@angular/router';
 import { MovieImagePipe } from '@movie/pipes/movie-image.pipe';
 import { MovieService } from '@movie/services/movie.service';
-import { toastSuccess } from '@auth/alerts/login-success';
+import { toastSuccess } from '@shared/alerts/toast-success';
 
 @Component({
   selector: 'movie-card',

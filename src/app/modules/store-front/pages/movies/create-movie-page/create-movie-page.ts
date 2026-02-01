@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { toastSuccess } from '@auth/alerts/login-success'
+import { toastSuccess } from '@shared/alerts/toast-success'
 import { FormMovie } from "@manager/components/form-movie/form-movie";
 import { CreateMovie } from '@manager/interfaces/create-movie.interface';
 import { MoviesManagerService } from '@manager/services/movies-manager.service';

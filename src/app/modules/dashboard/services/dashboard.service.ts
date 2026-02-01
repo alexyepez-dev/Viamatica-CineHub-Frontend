@@ -14,7 +14,7 @@ export class DashboardService {
   private http = inject(HttpClient);
   private baseUrl = environment.API_URL;
   private getDashboardCache = inject(CacheService<Dashboard>);
-  private resilienceService = inject(ResilienceService);
+  private getDashboardResilience = inject(ResilienceService<Dashboard>);
 
   getDashboard = () => {
     const key = dashboardKeysCache.dashboard();
@@ -25,8 +25,8 @@ export class DashboardService {
     return this.http.get<Dashboard>(`${this.baseUrl}/dashboard`).pipe(
       tap((x) => console.log(x)),
       tap((resp) => this.getDashboardCache.set(key, resp)),
-      this.resilienceService.strategy(),
-      this.resilienceService.catchingError(),
+      this.getDashboardResilience.strategy(),
+      this.getDashboardResilience.catchingError(),
     );
   };
 }
