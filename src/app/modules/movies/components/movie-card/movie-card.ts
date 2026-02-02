@@ -59,7 +59,7 @@ import { toastSuccess } from '@shared/alerts/toast-success';
           </a>
           <a
             class="btn btn-square btn-sm btn-outline btn-success"
-            [routerLink]="['/home/movies/update']"
+            [routerLink]="['/home/movies/update', movie().movieId]"
           >
             <span class="material-symbols-outlined ">edit</span>
           </a>

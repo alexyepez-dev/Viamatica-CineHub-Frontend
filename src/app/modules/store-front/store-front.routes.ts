@@ -28,7 +28,7 @@ const storeFrontRoutes: Routes = [
         canActivate: [authGuard],
       },
       {
-        path: 'movies/update',
+        path: 'movies/update/:movieId',
         loadComponent: () => import('./pages/movies/update-movie-page/update-movie-page'),
         canActivate: [authGuard],
       },

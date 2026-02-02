@@ -1,8 +1,9 @@
-import { Component, inject, output, signal } from '@angular/core';
+import { Component, effect, inject, input, OnInit, output, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CreateMovie } from '@manager/interfaces/create-movie.interface';
 import { MovieFormButtonPipe } from '@manager/pipes/movie-form-button.pipe';
+import { Movie } from '@movie/interfaces/movie.interface';
 import { FormError } from '@shared/components/form-error';
 import { pushError } from '@shared/utils/pushError.util';
 
@@ -10,38 +11,34 @@ import { pushError } from '@shared/utils/pushError.util';
   selector: 'form-movie',
   imports: [ReactiveFormsModule, FormError, MovieFormButtonPipe],
   template: `
-    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 animate-fadeIn">
+    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          src="https://www.svgrepo.com/show/401291/cinema.svg"
-          alt="Your Company"
-          class="mx-auto w-16"
-        />
+        <h1 class="text-2xl font-bold text-center">{{ router.url | movieFormButton }}</h1>
       </div>
 
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" [formGroup]="movieForm" (ngSubmit)="onSubmit()">
-          <div>
-            <label class="block text-lg font-medium text-gray-100">Nombre</label>
+        <form [formGroup]="movieForm" (ngSubmit)="onSubmit()" class="space-y-6">
             <div class="mt-2">
-              <input
-                type="text"
-                placeholder="Nombre de película"
-                formControlName="name"
-                class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
-              />
+              <input type="text" placeholder="Nombre" class="input input-bordered w-full" formControlName="name" />
             </div>
-          </div>
-          <div>
-            <label class="block text-lg font-medium text-gray-100">Duración</label>
             <div class="mt-2">
-              <input
-                type="number"
-                placeholder="Nombre de película"
-                formControlName="duration"
-                class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
-              />
+              <input type="number" placeholder="Duración" class="input input-bordered w-full" formControlName="duration" />
             </div>
+
+            <div class="mt-2">
+              <select class="select select-bordered w-full" formControlName="status">
+                <option value="NowPlaying">Disponible</option>
+                <option value="NotAvailable">No disponible</option>
+              </select>
+            </div>
+          <div>
+  
+              <textarea
+                class="textarea textarea-bordered w-full"
+                placeholder="Descripción"
+                formControlName="description"
+                rows="6"
+              ></textarea>
           </div>
 
           @if (hasError()) {
@@ -52,12 +49,7 @@ import { pushError } from '@shared/utils/pushError.util';
           }
 
           <div>
-            <button
-              type="submit"
-              class="flex w-full justify-center rounded-md px-3 btn btn-secondary py-1.5 text-sm/6 font-semiboldfocus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-            >
-              {{ router.url | movieFormButton }}
-            </button>
+            <button class="btn btn-secondary w-full" type="submit">Guardar</button>
           </div>
         </form>
       </div>
@@ -70,10 +62,26 @@ export class FormMovie {
 
   hasError = signal(false);
   postForm = output<CreateMovie>();
+  movie = input<Movie | null>(null);
+
+  constructor() {
+  effect(() => {
+    if (this.movie()) {
+      this.movieForm.patchValue({
+        name: this.movie()!.name,
+        duration: this.movie()!.duration,
+        description: this.movie()!.description,
+        status: this.movie()!.status,
+      });
+    }
+  });
+}
 
   movieForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(20)]],
     duration: [0, [Validators.required]],
+    description: ['', [Validators.required, Validators.maxLength(3000)]],
+    status: ['NowPlaying', Validators.required],
   });
 
   onSubmit = () => {

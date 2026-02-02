@@ -17,7 +17,6 @@ import { MovieStatusPipe } from '@movie/pipes/movie-status.pipe';
 
     @if (movieResource.hasValue()) {
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 animate-fadeIn">
-        <!-- Images -->
 
         <movie-carousel [images]="movieResource.value().urls" />
 

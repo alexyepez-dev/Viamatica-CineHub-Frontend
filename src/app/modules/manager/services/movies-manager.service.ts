@@ -16,4 +16,7 @@ export class MoviesManagerService {
 
   createMovieTheater = (model: CreateMovieTheater) =>
     this.http.post<CreateMovieTheater>(`${this.baseUrl}/movie-theaters`, model);
+
+  updateMovie = (model: CreateMovie, movieId: string) =>
+    this.http.patch(`${this.baseUrl}/movies/${movieId}`, model);
 }

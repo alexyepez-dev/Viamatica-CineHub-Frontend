@@ -4,6 +4,7 @@ import { toastSuccess } from '@shared/alerts/toast-success'
 import { FormMovie } from "@manager/components/form-movie/form-movie";
 import { CreateMovie } from '@manager/interfaces/create-movie.interface';
 import { MoviesManagerService } from '@manager/services/movies-manager.service';
+import { errorAlert } from '@shared/alerts/error-alert';
 
 @Component({
   selector: 'create-movie-page',
@@ -18,11 +19,12 @@ export default class CreateMoviePage {
 
   onSubmit = (model: CreateMovie) =>
     this.movieManagerService.createMovie(model).subscribe({
-      next: () => {
+      next: async() => {
         console.log(`Película ${model.name} creada`);
-        toastSuccess("Película creada correctamente").then(() => this.router.navigateByUrl('/home/dashboard'));
+        await toastSuccess("Película creada correctamente").then(() => this.router.navigateByUrl('/home/dashboard'));
       },
-      error: (err) => {
+      error: async (err) => {
+        await errorAlert("Error al crear la película")
         console.error(err);
       },
     });
