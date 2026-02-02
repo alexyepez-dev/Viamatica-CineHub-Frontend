@@ -19,7 +19,7 @@ export default class CreateMovieTheaterPage {
       next: () => {
         console.log(`Película ${model.name} creada`);
         toastSuccess('Película creada correctamente').then(() =>
-          this.router.navigateByUrl('/home/dashboard'),
+          this.router.navigateByUrl('/home/manager'),
         );
       },
       error: (err) => {

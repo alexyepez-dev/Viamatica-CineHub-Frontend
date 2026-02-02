@@ -15,7 +15,7 @@ import { Observable, of, tap } from 'rxjs';
 export class MovieTheatersService {
   private http = inject(HttpClient);
   private baseUrl = environment.API_URL;
-  private getMovieTheatersCache = inject(CacheService<MovieTheaters[]>);
+  private getMovieTheatersCache = new Map<string, MovieTheaters[]>();
   private getMovieTheaterStatusCache = inject(CacheService<MovieTheatersStatus>);
   private getMovieTheatersResilience = inject(ResilienceService<MovieTheaters[]>);
   private getMovieTheaterStatusResilience = inject(ResilienceService<MovieTheatersStatus>);
@@ -42,15 +42,27 @@ export class MovieTheatersService {
 
     return this.http.get<MovieTheatersStatus>(`${this.baseUrl}/movie-theaters/status/${name}`).pipe(
       tap((x) => console.log(x)),
-      tap((resp) => this.getMovieTheaterStatusCache.set(key, resp)),
+      // tap((resp) => this.getMovieTheaterStatusCache.set(key, resp)),
       this.getMovieTheaterStatusResilience.strategy(),
       this.getMovieTheaterStatusResilience.catchingError(),
     );
   };
 
   deleteMovieTheaterStatus = (movieTheaterId: string) =>
-    this.http.delete(`${this.baseUrl}/movie-theaters/${movieTheaterId}`);
+    this.http
+      .delete(`${this.baseUrl}/movie-theaters/${movieTheaterId}`)
+      .pipe(tap((x) => this.removeMovieTheaterFromCache(movieTheaterId)));
 
   assignMovieToMovieTheater = (model: MovieAssign) =>
     this.http.post(`${this.baseUrl}/movie-movie-theaters/assign`, model);
+
+  removeMovieTheaterFromCache = (movieTheaterId: string) => {
+    this.getMovieTheatersCache.forEach((list, key) => {
+      const updatedList = list.filter((theater) => theater.movieTheaterId !== movieTheaterId);
+
+      this.getMovieTheatersCache.set(key, updatedList);
+    });
+
+    this.getMovieTheaterStatusCache.clear();
+  };
 }

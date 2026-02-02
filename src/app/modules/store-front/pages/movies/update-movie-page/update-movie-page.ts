@@ -42,11 +42,11 @@ export default class UpdateMoviePage {
     const id = this.movieId();
     if (!id) return;
 
-    return this.movieManagerService.updateMovie(model, id).subscribe({
+    return this.movieService.updateMovie(model, id).subscribe({
       next: async () => {
         console.log(`Película ${model.name} actualizada`);
         await toastSuccess('Película actualizada correctamente').then(() =>
-          this.router.navigateByUrl('/home/dashboard'),
+          this.router.navigateByUrl('/home/movies'),
         );
         this.onMovieDeleted.emit();
       },

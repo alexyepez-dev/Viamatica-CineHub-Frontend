@@ -35,7 +35,7 @@ import { RouterLink } from '@angular/router';
           <div class="card-body">
             <div class="card-actions justify-between flex items-center">
               <p class="text-accent text-2xl">Sala de película</p>
-              <a class="btn btn-secondary" [routerLink]="['/home/manager/create-movie']">Crear</a>
+              <a class="btn btn-secondary" [routerLink]="['/home/manager/create-movie-theater']">Crear</a>
             </div>
           </div>
         </div>

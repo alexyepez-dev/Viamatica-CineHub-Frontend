@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { Movie } from '@movie/interfaces/movie.interface';
 import { MovieStatusPipe } from '@movie/pipes/movie-status.pipe';
 import { RouterLink } from '@angular/router';
@@ -85,7 +85,7 @@ export class MovieCard {
   deleteMovie = (movieId: string) =>
     this.movieService.deleteMovie(movieId).subscribe({
       next: () => {
-        toastSuccess('Sala eliminada exitosamente.');
+        toastSuccess('Película eliminada exitosamente.');
         this.onMovieDeleted.emit();
       },
       error: (err) => console.error(`Error: ${err}`),

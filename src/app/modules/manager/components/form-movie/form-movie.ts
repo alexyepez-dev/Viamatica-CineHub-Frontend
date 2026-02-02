@@ -78,7 +78,7 @@ export class FormMovie {
 }
 
   movieForm = this.fb.group({
-    name: ['', [Validators.required, Validators.maxLength(20)]],
+    name: ['', [Validators.required, Validators.maxLength(100)]],
     duration: [0, [Validators.required]],
     description: ['', [Validators.required, Validators.maxLength(3000)]],
     status: ['NowPlaying', Validators.required],

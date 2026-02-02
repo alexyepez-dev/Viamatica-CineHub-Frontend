@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '@envs/environment.development';
+import { CreateMovie } from '@manager/interfaces/create-movie.interface';
 import { moviesKeysCache } from '@movie/common/movie-keys.common';
 import { MovieOptions } from '@movie/interfaces/movie-options.interface';
 import { MoviePagination } from '@movie/interfaces/movie-pagination.interface';
@@ -15,8 +16,8 @@ import { of, tap } from 'rxjs';
 export class MovieService {
   private http = inject(HttpClient);
   private baseUrl = environment.API_URL;
-  private getMoviesCache = inject(CacheService<MoviePagination>);
-  private getMovieCache = inject(CacheService<Movie>);
+  private getMoviesCache = new Map<string, MoviePagination>();
+  private getMovieCache = new Map<string, Movie>();
   private searchMoviesByNameCache = inject(CacheService<Movie[]>);
   private searchMoviesByDateCache = inject(CacheService<Movie[]>);
   private getMoviesResilience = inject(ResilienceService<MoviePagination>);
@@ -93,10 +94,52 @@ export class MovieService {
     );
   };
 
+  updateMovie = (model: Partial<CreateMovie>, movieId: string) =>
+    this.http
+      .patch<Movie>(`${this.baseUrl}/movies/${movieId}`, model)
+      .pipe(tap((res) => this.updateMovieCache(res)));
+
   deleteMovie = (movieId: string) =>
-    this.http.delete(`${this.baseUrl}/movies`, {
-      params: {
-        movieId: movieId,
-      },
+    this.http
+      .delete(`${this.baseUrl}/movies`, {
+        params: {
+          movieId: movieId,
+        },
+      })
+      .pipe(tap(() => this.removeMovieFromCache(movieId)));
+
+  updateMovieCache = (updatedData: Movie) => {
+    const movieId = updatedData.movieId;
+
+    const movieKey = moviesKeysCache.idSlug(updatedData.slug);
+    const existingSingle = this.getMovieCache.get(movieKey);
+    if (existingSingle) {
+      this.getMovieCache.set(movieKey, { ...existingSingle, ...updatedData });
+    }
+
+    this.getMoviesCache.forEach((movieResponse) => {
+      movieResponse.movies = movieResponse.movies.map((currentMovie) => {
+        if (currentMovie.movieId === movieId) {
+          return { ...currentMovie, ...updatedData };
+        }
+        return currentMovie;
+      });
     });
+  };
+
+  removeMovieFromCache = (movieId: string) => {
+    for (let [key, movie] of this.getMovieCache.entries()) {
+      if (movie.movieId === movieId) {
+        this.getMovieCache.delete(key);
+        break;
+      }
+    }
+
+    this.getMoviesCache.forEach((response) => {
+      response.movies = response.movies.filter((movie) => movie.movieId !== movieId);
+    });
+
+    this.searchMoviesByNameCache.clear();
+    this.searchMoviesByDateCache.clear();
+  };
 }
