@@ -123,7 +123,7 @@ import { AuthService } from '@auth/services/auth.service';
       </div>
       <div class="navbar-end gap-4">
         @if (authService.authStatus() === 'authenticated') {
-          <button class="btn btn-ghost">{{ authService.username() }}</button>
+          <a class="text-success hidden sm:block">{{ authService.username() }}</a>
           <button class="btn btn-error" routerLink="/auth/login" (click)="authService.logout()">
             Salir
           </button>

@@ -15,8 +15,10 @@ import { MovieTheaterCard } from '@movie-theaters/components/movie-theater-card/
     }
 
     @if (movieTheaterResource.hasValue()) {
-      <h1 class="text-3xl font-bold animate-fadeIn">Todos las salas de películas.</h1>
-      <h2 class="text-xl mb-5 text-secondary animate-fadeIn">Para todos los gustos</h2>
+      <div class="p-4 md:p-0 lg:p-0 xl:p-0">
+        <h1 class="text-3xl font-bold animate-fadeIn">Todos las salas de películas.</h1>
+        <h2 class="text-xl mb-5 text-secondary animate-fadeIn">Para todos los gustos</h2>
+      </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 mt-2 gap-3">
         @for (movie of movieTheaterResource.value(); track $index) {
           <movie-theater-card

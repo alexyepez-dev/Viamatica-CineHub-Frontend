@@ -34,7 +34,7 @@ export class MovieService {
     return this.http
       .get<MoviePagination>(`${this.baseUrl}/movies`, {
         params: {
-          limit: option.limit ?? 9,
+          limit: option.limit ?? 3,
           offset: option.offset ?? 0,
         },
       })

@@ -13,7 +13,7 @@ import { Component, output, signal } from '@angular/core';
     />
     <a
       (click)="emit(textSearch.value)"
-      class="btn btn-secondary ml-4"
+      class="btn btn-secondary md:ml-4 lg:ml-4 xl:ml-4"
       >Buscar</a
     >
   `,

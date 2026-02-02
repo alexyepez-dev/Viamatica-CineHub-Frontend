@@ -52,19 +52,19 @@ import { toastSuccess } from '@shared/alerts/toast-success';
 
         <div class="card-actions mt-4 grid grid-cols-4 gap-1">
           <a
-            class="btn btn-square btn-sm btn-outline btn-info"
+            class="btn btn-square btn-sm btn-info"
             [routerLink]="['/home/movies/assign-image', movie().movieId]"
           >
             <span class="material-symbols-outlined">add_photo_alternate</span>
           </a>
           <a
-            class="btn btn-square btn-sm btn-outline btn-success"
+            class="btn btn-square btn-sm btn-success"
             [routerLink]="['/home/movies/update', movie().movieId]"
           >
             <span class="material-symbols-outlined ">edit</span>
           </a>
           <button
-            class="btn btn-square btn-sm btn-outline btn-error"
+            class="btn btn-square btn-sm btn-error"
             (click)="deleteMovie(movie().movieId)"
           >
             <span class="material-symbols-outlined">delete</span>

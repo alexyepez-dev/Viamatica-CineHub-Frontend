@@ -4,7 +4,7 @@ import { MovieSearchDate } from '@movie/components/movie-search-date/movie-searc
 import { MovieService } from '@movie/services/movie.service';
 import { MovieCard } from '@movie/components/movie-card/movie-card';
 import { of } from 'rxjs';
-import { FormError } from "@shared/components/form-error";
+import { FormError } from '@shared/components/form-error';
 
 @Component({
   selector: 'search-publication-date-page',
@@ -18,16 +18,18 @@ import { FormError } from "@shared/components/form-error";
 
     @if (dateResource.error()) {
       <form-error
-          [error]="'No existe una película para esa fecha.'"
-          class="animate-fadeIn fixed top-5 right-5"
-        />
+        [error]="'No existe una película para esa fecha.'"
+        class="animate-fadeIn fixed top-5 right-5"
+      />
     }
 
-    <div class="flex items-center justify-between animate-fadeIn">
-      <section>
+    <div
+      class="flex items-center flex-col md:flex-col lg:flex-row xl:flex-row lg:justify-between xl:justify-between animate-fadeIn"
+    >
+      <div class="p-4 md:p-0 lg:p-0 xl:p-0 flex-col md:flex-row lg:flex-row xl:flex-row">
         <h1 class="text-3xl font-bold">Todas las películas.</h1>
         <h2 class="text-xl mb-5 text-secondary">Para todos los gustos</h2>
-      </section>
+      </div>
       <movie-search-date (value)="query.set($event)" />
     </div>
 

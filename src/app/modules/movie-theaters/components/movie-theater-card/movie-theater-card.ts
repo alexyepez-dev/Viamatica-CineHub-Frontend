@@ -22,7 +22,7 @@ import { MovieTheatersService } from '@movie-theaters/services/movie-theaters.se
           </button>
           <button
             (click)="deleteMovieTheater(movieTheater().movieTheaterId)"
-            class="btn btn-square btn-sm btn-outline btn-error"
+            class="btn btn-square btn-sm btn-error"
           >
             <span class="material-symbols-outlined">delete</span>
           </button>
