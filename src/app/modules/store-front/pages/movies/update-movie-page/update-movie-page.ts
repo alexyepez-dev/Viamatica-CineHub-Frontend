@@ -1,4 +1,3 @@
-import { Movie } from '@movie/interfaces/movie.interface';
 import { Component, inject, output, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { toastSuccess } from '@shared/alerts/toast-success';
