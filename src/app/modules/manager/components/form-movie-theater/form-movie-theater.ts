@@ -1,7 +1,6 @@
 import { Component, inject, output, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CreateMovieTheater } from '@manager/interfaces/create-movie-theater';
-import { CreateMovie } from '@manager/interfaces/create-movie.interface';
 import { FormError } from '@shared/components/form-error';
 import { pushError } from '@shared/utils/pushError.util';
 

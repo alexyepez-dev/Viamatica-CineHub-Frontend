@@ -1,10 +1,9 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AssignImageToMovie } from '@movie/interfaces/assign-image-to-movie.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { toastSuccess } from '@shared/alerts/toast-success';
 import { MovieImageService } from '@movie/services/movie-image.service';
 import { AssignImageToMovieForm } from '@movie/components/assign-image-to-movie-form/assign-image-to-movie-form';
-import { Movie } from '@movie/interfaces/movie.interface';
 
 @Component({
   selector: 'assign-image-to-movie',
@@ -17,11 +16,9 @@ export default class AssignImageToMoviePage {
   private activateRoute = inject(ActivatedRoute);
   private router = inject(Router);
 
-  // Definimos el señal para el ID
   movieId = signal<string | null>(null);
 
   constructor() {
-    // Accedemos al parámetro en el constructor o ngOnInit
     const id = this.activateRoute.snapshot.paramMap.get('movieId');
     if (id) {
       this.movieId.set(id);
@@ -32,7 +29,6 @@ export default class AssignImageToMoviePage {
     }
   }
 
-  // Ajustamos el onSubmit para usar el ID del signal
   onSubmit = (model: AssignImageToMovie) => {
     const id = this.movieId();
     if (!id) return;

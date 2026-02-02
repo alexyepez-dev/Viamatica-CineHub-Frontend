@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { MovieCard } from '@movie/components/movie-card/movie-card';
 import { MovieService } from '@movie/services/movie.service';

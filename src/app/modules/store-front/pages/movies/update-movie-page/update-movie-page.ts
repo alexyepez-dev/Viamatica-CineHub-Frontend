@@ -19,12 +19,10 @@ export default class UpdateMoviePage {
   private movieService = inject(MovieService);
   private router = inject(Router);
 
-  // Definimos el señal para el ID
   movieId = signal<string | null>(null);
   onMovieDeleted = output<void>();
 
   constructor() {
-    // Accedemos al parámetro en el constructor o ngOnInit
     const id = this.activateRoute.snapshot.paramMap.get('movieId');
 
     if (id) {
@@ -34,8 +32,6 @@ export default class UpdateMoviePage {
       console.error('No se encontró el movieId en la URL');
     }
   }
-
-  idSlug = this.activateRoute.snapshot.params['idSlug'];
 
   movieResource = rxResource({
     params: () => ({ idSlug: this.movieId() }),

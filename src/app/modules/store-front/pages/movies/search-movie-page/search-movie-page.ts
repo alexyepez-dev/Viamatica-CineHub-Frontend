@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { MovieSearchInput } from '@movie/components/search-input/search-input';
 import { MovieService } from '@movie/services/movie.service';
